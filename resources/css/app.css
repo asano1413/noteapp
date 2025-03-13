@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @source "../views";
+
+.bg-custom {
+  background: radial-gradient(circle at 70% 0%, #707070 0%, #2C2C2C 100%);
+}

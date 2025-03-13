@@ -1,24 +1,22 @@
 <div class="w-full bg-gradient-to-r from-slate-600 to-slate-800 p-4 flex justify-between items-center">
     <div class="flex items-center">
         <a href="{{ url('/') }}" class="decoration-none">
-            <h1 class="text-2xl font-bold mx-4 text-blue-400 hover:text-blue-300 duration-500 ease-in-out">佐脇翔也は今日も眠らない</h1>
+            <h1 class="text-2xl font-bold mx-4 text-cyan-200 hover:text-cyan-50 duration-500 ease-in-out">佐脇翔也は今日も眠らない</h1>
         </a>
-        <a href="{{ url('/posts') }}" class="text-white ml-4">投稿</a>
-        <a href="{{ url('/mypage') }}" class="text-white ml-4">マイページ</a>
     </div>
 
     <div class="flex items-center space-x-5">
         <div class="flex items-center">
-            <input type="text" placeholder="検索" class="p-2 rounded-md border border-white text-white">
-            <button class="ml-1 p-2 bg-blue-500 text-white rounded-md">検索</button>
+            <input type="text" placeholder="検索" class="p-3 rounded-md border border-white text-white">
+            <button class="ml-1 p-3 bg-cyan-600 text-white rounded-md hover:bg-cyan-400 hover:cursor-pointer duration-500 ease-in-out">検索</button>
         </div>
 
-        <button class="relative text-center p-2 bg-blue-500 text-white rounded-md" onclick="toggleNotificationModal()">
+        <button class="relative text-center px-4 py-3 bg-cyan-600 text-white rounded-xl hover:bg-cyan-400 hover:cursor-pointer duration-500 ease-in-out" onclick="toggleNotificationModal()">
             通知
             <span id="unreadCount" class="absolute top-0 right-0 inline-block w-3 h-3 bg-red-500 rounded-full hidden"></span>
         </button>
 
-        <button class="ml-4 p-2 bg-blue-500 text-white rounded-md" onclick="toggleFlyoutMenu()">マイページ設定</button>
+        <button class="ml-4 px-4 py-3 bg-cyan-600 text-xl font-bold text-white rounded-[25px] hover:bg-cyan-400 hover:cursor-pointer duration-500 ease-in-out" onclick="toggleFlyoutMenu()">≡</button>
     </div>
 </div>
 
@@ -28,15 +26,15 @@
         <ul id="notificationList">
             <li class="mb-2 border-b border-gray-300 flex justify-between items-center p-4 bg-white">
                 <span class="text-black">通知1</span>
-                <button class="p-2 bg-blue-500 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
+                <button class="p-2 bg-sky-600 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
             </li>
             <li class="mb-2 border-b border-gray-300 flex justify-between items-center p-4 bg-white">
                 <span class="text-black">通知2</span>
-                <button class="p-2 bg-blue-500 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
+                <button class="p-2 bg-sky-600 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
             </li>
             <li class="mb-2 border-b border-gray-300 flex justify-between items-center p-4 bg-white">
                 <span class="text-black">通知3</span>
-                <button class="p-2 bg-blue-500 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
+                <button class="p-2 bg-sky-600 text-white rounded-md mr-4" onclick="markAsRead(this)">✓</button>
             </li>
         </ul>
         <button class="absolute top-4 right-4 p-2 bg-red-500 text-white rounded-md" onclick="toggleNotificationModal()">閉じる</button>
@@ -55,6 +53,13 @@
     </div>
 </div>
 
+<div class="bg-slate-700 p-4">
+    <ul class="flex justify-start space-x-10 ml-24">
+      <li><a href="{{ url('/posts') }}" class=" px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">投稿</a></li>
+      <li><a href="{{ url('/profile') }}" class=" px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">マイページ</a></li>
+      <li><a href="{{ url('/contact') }}" class="px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">お問い合わせ</a></li>
+    </ul>
+</div>
 <script>
 function toggleNotificationModal() {
     const modal = document.getElementById('notificationModal');
