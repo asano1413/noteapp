@@ -3,17 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController\ContactController;
 use App\Http\Controllers\PostController\PostController;
-use App\Http\Controllers\LoginController\LoginController;
-use App\Http\Controllers\RegisterController\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController\ProfileController;
 use App\Http\Controllers\SettingsController\SettingsController;
 use App\Http\Controllers\TermsController\TermsController;
+use App\Http\Controllers\PersonalNoteController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -27,6 +28,9 @@ Route::post('/contact', [ContactController::class, 'sendContact']);
 
 Route::get('/settings', [SettingsController::class, 'showSettingsForm'])->name('settings');
 Route::post('/settings', [SettingsController::class, 'updateSettings']);
+
+Route::get('/create-personal-note', [PersonalNoteController::class, 'create'])->name('create-personal-note');
+Route::post('/create-personal-note', [PersonalNoteController::class, 'store'])->name('create-personal-note');
 
 Route::get('/terms', [TermsController::class, 'show'])->name('terms');
 

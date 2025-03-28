@@ -1,22 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\RegisterController;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class RegisterController extends Controller
-{
-    public function register()
+{    public function showRegistrationForm()
     {
-        // 登録フォームを表示
         return view('register');
     }
 
+    // 登録データを保存
     public function store(Request $request)
     {
-        // 登録処理
-        // バリデーションと保存処理を追加
-        return redirect()->route('login');
+        // バリデーション処理
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // ユーザー作成処理（例: Userモデルを使用）
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => bcrypt($request->password),
+        // ]);
+
+        // ログインページにリダイレクト
+        return redirect()->route('login')->with('success', '登録が完了しました。ログインしてください。');
     }
 }

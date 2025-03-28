@@ -1,12 +1,22 @@
-<div class="bg-slate-700 p-4">
-    <ul class="flex justify-start space-x-10 ml-24">
-      <li><a href="{{ url('/posts') }}" class=" px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">投稿</a></li>
-      <li><a href="{{ url('/profile') }}" class=" px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">マイページ</a></li>
-      <li><a href="{{ url('/contact') }}" class="px-5 py-4 border-2 border-t-0 bg-slate-700 border-sky-500 text-sky-500 text-center rounded-xl rounded-t-none font-bold hover:bg-slate-200 hover:text-blue-500 duration-500 ease-in-out">お問い合わせ</a></li>
+<div class="flex flex-col w-full p-4 bg-slate-700">
+  <div class="text-center text-white mt-4">
+    <ul class="flex justify-center space-x-5">
+      <li><a href="{{ url('/terms') }}" class="hover:text-cyan-500">利用規約</a></li>
+      <li><a href="{{ url('/privacy') }}" class="hover:text-cyan-500">プライバシーポリシー</a></li>
+      <li><a href="{{ url('/contact') }}" class="hover:text-cyan-500">お問い合わせ</a></li>
     </ul>
+  </div>
+  <div class="flex justify-end space-x-5 my-2 mr-6">
+    <a href="https://github.com" target="_blank" class="text-white hover:text-cyan-500">
+      <i class="fab fa-github text-2xl"></i>
+    </a>
+    <a href="https://facebook.com" target="_blank" class="text-white hover:text-cyan-500">
+      <i class="fab fa-facebook text-2xl"></i>
+    </a>
+    <a href="https://twitter.com" target="_blank" class="text-white hover:text-cyan-500">
+      <i class="fab fa-twitter text-2xl"></i>
+    </a>
+  </div>
+  <div class="text-center text-white mt-4">
+    <p>&copy; 2025 NoteApp</p>
 </div>
-<script>
-function toggleNotificationModal() {
-    const modal = document.getElementById('notificationModal');
-    modal.classList.toggle('hidden');
-}

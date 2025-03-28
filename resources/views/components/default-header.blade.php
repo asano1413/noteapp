@@ -1,7 +1,7 @@
 <div class="w-full bg-gradient-to-r from-slate-600 to-slate-800 p-4 flex justify-between items-center">
     <div class="flex items-center">
         <a href="{{ url('/') }}" class="decoration-none">
-            <h1 class="text-2xl font-bold mx-4 text-cyan-200 hover:text-cyan-50 duration-500 ease-in-out">佐脇翔也は今日も眠らない</h1>
+            <h1 class="text-2xl font-bold mx-4 text-cyan-200 hover:text-cyan-50 duration-500 ease-in-out">Note App</h1>
         </a>
     </div>
 

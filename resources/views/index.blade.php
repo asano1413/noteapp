@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
     @vite('resources/css/app.css')
@@ -48,6 +49,9 @@
           <span className="relative z-10">他の人の投稿を見る</a></span>
     </div>
 </main>
+<footer>
+  <x-footer/>
+</footer>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const typingEffect = document.getElementById('typingEffect');
