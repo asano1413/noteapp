@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_notes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+          $table->id();
+          $table->string('title');
+          $table->text('content');
+          $table->unsignedBigInteger('user_id');
+          $table->timestamps();
         });
     }
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController\ProfileController;
 use App\Http\Controllers\SettingsController\SettingsController;
 use App\Http\Controllers\TermsController\TermsController;
 use App\Http\Controllers\PersonalNoteController;
+use App\Http\Controllers\MyPageController;
 
 Route::get('/', function () {
     return view('index');
@@ -18,7 +19,7 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update']);
@@ -33,6 +34,9 @@ Route::get('/create-personal-note', [PersonalNoteController::class, 'create'])->
 Route::post('/create-personal-note', [PersonalNoteController::class, 'store'])->name('create-personal-note');
 
 Route::get('/terms', [TermsController::class, 'show'])->name('terms');
+
+Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage')->middleware('auth');
+Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit')->middleware('auth');
 
 Route::resource('posts', PostController::class)->except(['show']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
