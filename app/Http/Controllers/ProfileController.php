@@ -1,28 +1,51 @@
 <?php
 
-namespace App\Http\Controllers\ProfileController;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
-    public function show()
+    public function showProfileView()
     {
-        // プロフィールを表示
         return view('profile');
     }
 
     public function edit()
     {
-        // プロフィール編集フォームを表示
         return view('profile.edit');
     }
 
     public function update(Request $request)
     {
-        // プロフィールを更新
-        // バリデーションと更新処理を追加
-        return redirect()->route('profile');
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'ログインしてください。');
+        }
+
+        $request->validate([
+          'name' => 'required|string|max:255',
+          'email' => 'required|string|email|max:255|unique:users,email,' . $request->user()->id,
+          'password' => 'nullable|string|min:8|confirmed',
+      ]);
+
+        $user = $request->user();
+
+        DB::transaction(function () use ($request, $user) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            if ($user->isDirty()) {
+                $user->save();
+            }
+        });
+
+        return redirect()->route('mypage')->with('success', 'プロフィールが更新されました。');
     }
 }

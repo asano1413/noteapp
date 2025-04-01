@@ -12,7 +12,6 @@
     <x-default-header/>
 </header>
 <main class="w-4/5 mx-auto mt-16 mb-24 bg-gray-700">
-    <!-- ユーザー情報セクション -->
     <section class="bg-slate-600 p-6 rounded-lg shadow-lg mb-8">
         <h2 class="text-2xl font-bold text-white mb-4">ユーザー情報</h2>
         <div class="text-white">
@@ -20,9 +19,13 @@
             <p><strong>メールアドレス:</strong> {{ auth()->user()->email }}</p>
             <p><strong>登録日:</strong> {{ auth()->user()->created_at->format('Y年m月d日') }}</p>
         </div>
+        <div class="mr-8 flex justify-end">
+            <a href="{{ route('profile') }}" class="bg-cyan-500 hover:bg-white border-2 border-cyan-500 text-white hover:text-cyan-700 font-bold py-2 px-4 rounded duration-300 ease-in-out">
+                編集
+            </a>
+        </div>
     </section>
 
-    <!-- メモ一覧セクション -->
     <section class="bg-slate-600 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-white mb-4">作成したメモ一覧</h2>
         @if($notes->isEmpty())

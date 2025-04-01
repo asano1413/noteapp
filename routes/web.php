@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ContactController\ContactController;
 use App\Http\Controllers\PostController\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\ProfileController\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController\SettingsController;
 use App\Http\Controllers\TermsController\TermsController;
 use App\Http\Controllers\PersonalNoteController;
@@ -15,14 +16,23 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::post('/logout', function () {
+  Auth::logout();
+  return redirect('/')->with('success', 'ログアウトしました。');
+})->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-Route::post('/profile', [ProfileController::class, 'update']);
+
+Route::middleware('auth')->group(function () {
+  Route::get('/profile', [ProfileController::class, 'showProfileView'])->name('profile');
+  Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [ContactController::class, 'sendContact']);
