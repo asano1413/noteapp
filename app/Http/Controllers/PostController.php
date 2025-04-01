@@ -1,177 +1,132 @@
 <?php
 
-namespace App\Http\Controllers\PostController;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Reply;
 
 class PostController extends Controller
 {
+    // 投稿一覧の表示
     public function index()
     {
-        // 投稿の一覧を表示
-        return view('posts.index');
+        $posts = Post::latest()->paginate(10);
+        return view('posts.index', compact('posts'));
     }
 
-    public function create()
+    // 投稿の詳細表示
+    public function show(Post $post)
     {
-        // 新しい投稿を作成するフォームを表示
-        return view('posts.create');
-    }
-
-    public function store(Request $request)
-    {
-        // 新しい投稿を保存
-        // バリデーションと保存処理を追加
-        return redirect()->route('posts.index');
-    }
-
-    public function show($post)
-    {
-        // 特定の投稿を表示
         return view('posts.show', compact('post'));
     }
 
-    public function edit($post)
+    // 投稿作成フォームの表示
+    public function create()
     {
-        // 特定の投稿を編集するフォームを表示
+        return view('posts.create');
+    }
+
+    // 投稿の保存
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('posts.index')->with('success', '投稿が作成されました。');
+    }
+
+    // 投稿の編集フォームの表示
+    public function edit(Post $post)
+    {
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Request $request, $post)
+    // 投稿の更新
+    public function update(Request $request, Post $post)
     {
-        // 特定の投稿を更新
-        // バリデーションと更新処理を追加
-        return redirect()->route('posts.show', $post);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return redirect()->route('posts.index')->with('success', '投稿が更新されました。');
     }
 
-    public function destroy($post)
+    // 投稿の削除
+    public function destroy(Post $post)
     {
-        // 特定の投稿を削除
-        return redirect()->route('posts.index');
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', '投稿が削除されました。');
     }
 
-    public function delete($post)
+    // コメント一覧の表示
+    public function comments(Post $post)
     {
-        // 特定の投稿をソフトデリート
-        return redirect()->route('posts.index');
+        $comments = $post->comments()->latest()->paginate(10);
+        return view('posts.comments.index', compact('post', 'comments'));
     }
 
-    public function restore($post)
+    // コメント作成フォームの表示
+    public function createComment(Post $post)
     {
-        // 特定の投稿を復元
-        return redirect()->route('posts.index');
+        return view('posts.comments.create', compact('post'));
     }
 
-    public function forceDelete($post)
+    // コメントの保存
+    public function storeComment(Request $request, Post $post)
     {
-        // 特定の投稿を完全に削除
-        return redirect()->route('posts.index');
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $post->comments()->create([
+            'content' => $request->content,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('posts.comments', $post)->with('success', 'コメントが追加されました。');
     }
 
-    public function comments($post)
+    // コメントの編集フォームの表示
+    public function editComment(Post $post, Comment $comment)
     {
-        // 特定の投稿のコメント一覧を表示
-        return view('comments.index', compact('post'));
+        return view('posts.comments.edit', compact('post', 'comment'));
     }
 
-    public function createComment($post)
+    // コメントの更新
+    public function updateComment(Request $request, Post $post, Comment $comment)
     {
-        // 新しいコメントを作成するフォームを表示
-        return view('comments.create', compact('post'));
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $comment->update([
+            'content' => $request->content,
+        ]);
+
+        return redirect()->route('posts.comments', $post)->with('success', 'コメントが更新されました。');
     }
 
-    public function storeComment(Request $request, $post)
+    // コメントの削除
+    public function destroyComment(Post $post, Comment $comment)
     {
-        // 新しいコメントを保存
-        // バリデーションと保存処理を追加
-        return redirect()->route('posts.comments', $post);
-    }
-
-    public function showComment($post, $comment)
-    {
-        // 特定のコメントを表示
-        return view('comments.show', compact('post', 'comment'));
-    }
-
-    public function editComment($post, $comment)
-    {
-        // 特定のコメントを編集するフォームを表示
-        return view('comments.edit', compact('post', 'comment'));
-    }
-
-    public function updateComment(Request $request, $post, $comment)
-    {
-        // 特定のコメントを更新
-        // バリデーションと更新処理を追加
-        return redirect()->route('posts.comments.show', [$post, $comment]);
-    }
-
-    public function destroyComment($post, $comment)
-    {
-        // 特定のコメントを削除
-        return redirect()->route('posts.comments', $post);
-    }
-
-    public function deleteComment($post, $comment)
-    {
-        // 特定のコメントをソフトデリート
-        return redirect()->route('posts.comments', $post);
-    }
-
-    public function restoreComment($post, $comment)
-    {
-        // 特定のコメントを復元
-        return redirect()->route('posts.comments', $post);
-    }
-
-    public function forceDeleteComment($post, $comment)
-    {
-        // 特定のコメントを完全に削除
-        return redirect()->route('posts.comments', $post);
-    }
-
-    public function replies($post, $comment)
-    {
-        // 特定のコメントの返信一覧を表示
-        return view('replies.index', compact('post', 'comment'));
-    }
-
-    public function createReply($post, $comment)
-    {
-        // 新しい返信を作成するフォームを表示
-        return view('replies.create', compact('post', 'comment'));
-    }
-
-    public function storeReply(Request $request, $post, $comment)
-    {
-        // 新しい返信を保存
-        // バリデーションと保存処理を追加
-        return redirect()->route('posts.comments.replies', [$post, $comment]);
-    }
-
-    public function showReply($post, $comment, $reply)
-    {
-        // 特定の返信を表示
-        return view('replies.show', compact('post', 'comment', 'reply'));
-    }
-
-    public function editReply($post, $comment, $reply)
-    {
-        // 特定の返信を編集するフォームを表示
-        return view('replies.edit', compact('post', 'comment', 'reply'));
-    }
-
-    public function updateReply(Request $request, $post, $comment, $reply)
-    {
-        // 特定の返信を更新
-        // バリデーションと更新処理を追加
-        return redirect()->route('posts.comments.replies.show', [$post, $comment, $reply]);
-    }
-
-    public function destroyReply($post, $comment, $reply)
-    {
-        // 特定の返信を削除
-        return redirect()->route('posts.comments.replies', [$post, $comment]);
+        $comment->delete();
+        return redirect()->route('posts.comments', $post)->with('success', 'コメントが削除されました。');
     }
 }

@@ -17,7 +17,7 @@
           <span class="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full"></span>
         </a>
       @endauth
-      <a href="{{ url('/post') }}" class="relative text-white no-underline transition-colors duration-300 hover:text-gray-200 group">
+      <a href="{{ url('posts') }}" class="relative text-white no-underline transition-colors duration-300 hover:text-gray-200 group">
         投稿
         <span class="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full"></span>
       </a>

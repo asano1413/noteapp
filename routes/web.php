@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ContactController\ContactController;
-use App\Http\Controllers\PostController\PostController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SettingsController\SettingsController;
-use App\Http\Controllers\TermsController\TermsController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\PersonalNoteController;
 use App\Http\Controllers\MyPageController;
 
@@ -20,18 +20,17 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/logout', function () {
-  Auth::logout();
-  return redirect('/')->with('success', 'ログアウトしました。');
+    Auth::logout();
+    return redirect('/')->with('success', 'ログアウトしました。');
 })->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-
 Route::middleware('auth')->group(function () {
-  Route::get('/profile', [ProfileController::class, 'showProfileView'])->name('profile');
-  Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-  Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'showProfileView'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact');
@@ -48,14 +47,17 @@ Route::get('/terms', [TermsController::class, 'show'])->name('terms');
 Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage')->middleware('auth');
 Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit')->middleware('auth');
 
+// Post関連のルート
 Route::resource('posts', PostController::class)->except(['show']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
+// Postの追加アクション
 Route::prefix('posts/{post}')->group(function () {
     Route::get('delete', [PostController::class, 'delete'])->name('posts.delete');
     Route::get('restore', [PostController::class, 'restore'])->name('posts.restore');
     Route::get('forceDelete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
 
+    // コメント関連のルート
     Route::prefix('comments')->group(function () {
         Route::get('/', [PostController::class, 'comments'])->name('posts.comments');
         Route::get('create', [PostController::class, 'createComment'])->name('posts.comments.create');
@@ -68,6 +70,7 @@ Route::prefix('posts/{post}')->group(function () {
         Route::get('{comment}/restore', [PostController::class, 'restoreComment'])->name('posts.comments.restore');
         Route::get('{comment}/forceDelete', [PostController::class, 'forceDeleteComment'])->name('posts.comments.forceDelete');
 
+        // 返信関連のルート
         Route::prefix('{comment}/replies')->group(function () {
             Route::get('/', [PostController::class, 'replies'])->name('posts.comments.replies');
             Route::get('create', [PostController::class, 'createReply'])->name('posts.comments.replies.create');

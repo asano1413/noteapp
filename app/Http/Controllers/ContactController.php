@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\ContactController;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ContactController extends Controller
 {
-    public function show()
+    public function showContactForm()
     {
-        // お問い合わせフォームを表示
         return view('contact');
     }
 
     public function send(Request $request)
     {
-        // お問い合わせ内容を送信
-        // バリデーションと送信処理を追加
-        return redirect()->route('contact');
+      $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:5000',
+        ]);
+
+        return redirect()->route('index')->with('success', 'お問い合わせが送信されました。');
     }
 }
