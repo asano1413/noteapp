@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'showProfileView'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/personal-notes/create', [PersonalNoteController::class, 'create'])->name('personal-notes.create');
+    Route::post('/personal-notes', [PersonalNoteController::class, 'store'])->name('personal-notes.store');
+    Route::get('/personal-notes/{personalNote}/edit', [PersonalNoteController::class, 'edit'])->name('personal-notes.edit');
+    Route::put('/personal-notes/{personalNote}', [PersonalNoteController::class, 'update'])->name('personal-notes.update');
+    Route::delete('/personal-notes/{personalNote}', [PersonalNoteController::class, 'destroy'])->name('personal-notes.destroy');
 });
 
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact');
@@ -47,10 +52,8 @@ Route::get('/terms', [TermsController::class, 'show'])->name('terms');
 Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage')->middleware('auth');
 Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit')->middleware('auth');
 
-// Post関連のルート
 Route::resource('posts', PostController::class)->except(['show']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-
 // Postの追加アクション
 Route::prefix('posts/{post}')->group(function () {
     Route::get('delete', [PostController::class, 'delete'])->name('posts.delete');

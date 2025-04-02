@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Schema;
 
 class PersonalNote extends Model
 {
+  protected $fillable = [
+    'title',
+    'content',
+    'user_id'
+  ];
   public function up()
 {
     Schema::create('personal_notes', function (Blueprint $table) {
@@ -20,4 +25,8 @@ class PersonalNote extends Model
     });
 }
     use HasFactory;
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

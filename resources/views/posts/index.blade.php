@@ -18,6 +18,8 @@
                         <a href="{{ route('posts.show', $post) }}" class="hover:underline">{{ $post->title }}</a>
                     </h2>
                     <p class="text-gray-300 mt-2">{{ Str::limit($post->content, 100) }}</p>
+                    <p class="text-gray-400 text-sm mt-2">作成日: {{ $post->created_at->format('Y年m月d日 H:i') }}</p>
+                    <p class="text-gray-400 text-sm mt-2">投稿者: {{ $post->user->name }}</p>
                 </div>
             @endforeach
         </div>

@@ -40,11 +40,11 @@
         <div class="bg-slate-600 p-4 rounded-lg shadow-lg text-center border-2 border-sky-400 text-white flex-grow hover:bg-slate-700 hover:cursor-pointer transition duration-500 ease-in-out">
             <h2 class="text-xl font-bold mt-8 mb-4">共有するノートを作成</h2>
             <p class="mb-4">他のユーザーと共有するノートを作成します。</p>
-            <a href="{{ url('/create-shared-note') }}" class="bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-400 duration-300 ease-in-out">作成</a>
+            <a href="{{ url('/posts/create') }}" class="bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-400 duration-300 ease-in-out">作成</a>
         </div>
     </div>
     <div class="mt-24">
-        <a href="{{ url('/shared-notes') }}" class="relative overflow-hidden bg-cyan-600 border-2 border-cyan-600 text-white px-4 py-2 rounded-md duration-300 ease-in-out hover:text-sky-600 hover:font-bold hover:bg-gray-50">他の人の投稿を見る</a>
+        <a href="{{ url('/posts') }}" class="relative overflow-hidden bg-cyan-600 border-2 border-cyan-600 text-white px-4 py-2 rounded-md duration-300 ease-in-out hover:text-sky-600 hover:font-bold hover:bg-gray-50">他の人の投稿を見る</a>
     </div>
 </main>
 <footer>

@@ -37,7 +37,18 @@
                         <h3 class="text-xl font-bold text-white">{{ $note->title }}</h3>
                         <p class="text-gray-300">{{ Str::limit($note->content, 100) }}</p>
                         <p class="text-gray-400 text-sm mt-2">作成日: {{ $note->created_at->format('Y年m月d日 H:i') }}</p>
-                        <a href="{{ route('notes.show', $note->id) }}" class="text-cyan-500 hover:underline">詳細を見る</a>
+                        <div class="flex space-x-4 mt-4">
+                        <a href="{{ route('personal-notes.edit', $note->id) }}" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            編集
+                        </a>
+                            <form action="{{ route('personal-notes.destroy', $note->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400">
+                                    削除
+                                </button>
+                            </form>
+                        </div>
                     </li>
                 @endforeach
             </ul>
