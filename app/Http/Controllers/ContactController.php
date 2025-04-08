@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
+use App\Mail\ContactMail;
 
 class ContactController extends Controller
 {
@@ -14,12 +16,26 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
-      $request->validate([
+        $rateLimitKey = 'contact-form:' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($rateLimitKey, 5)) {
+            return back()->withErrors(['error' => '短時間に多くのリクエストが送信されました。しばらくしてから再度お試しください。']);
+        }
+
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:5000',
         ]);
 
-        return redirect()->route('index')->with('success', 'お問い合わせが送信されました。');
+        try {
+          Mail::to(config('mail.admin_address'))->send(new ContactMail($validated));
+      } catch (\Exception $e) {
+          return back()->withErrors(['error' => '送信中にエラーが発生しました。もう一度お試しください。']);
+      }
+
+        RateLimiter::hit($rateLimitKey, 600);
+
+        return back()->with('success', 'お問い合わせを送信しました。');
     }
 }

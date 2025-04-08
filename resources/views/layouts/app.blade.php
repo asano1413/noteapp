@@ -11,14 +11,14 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-700 text-gray-800 min-h-screen flex flex-col">
-    <header>
-      <x-default-header/>
+    <header class="shadow-md bg-[#121212]">
+        <x-default-header/>
     </header>
-    <main class="flex-grow container mx-auto py-8 px-4">
+    <main class="flex-grow container mx-auto py-8 px-4 bg-[#1E1E1E] text-[#E0E0E0] rounded-lg shadow-lg mt-6">
         @yield('content')
     </main>
-    <footer>
-      <x-footer />
+    <footer class="bg-[#121212] mt-6">
+        <x-footer />
     </footer>
 </body>
 </html>

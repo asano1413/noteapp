@@ -7,34 +7,38 @@
   <title>新規登録</title>
   @vite('resources/css/app.css')
 </head>
-<body class="bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900">
+<body class="bg-gradient-to-br from-[#1E1E1E] via-[#2A2A2A] to-[#121212] text-[#E0E0E0]">
   <header>
     <x-default-header/>
   </header>
   <main class="w-full mx-auto mt-16 mb-24">
     <div class="flex flex-col lg:flex-row justify-center items-center px-4">
-      <div class="w-full lg:w-1/2 bg-slate-600 bg-opacity-90 backdrop-blur-md border border-gray-300 p-10 rounded-lg shadow-2xl">
-        <h2 class="text-3xl font-extrabold text-center text-white mb-8">新規登録</h2>
+      <div class="w-full lg:w-1/2 bg-[#2A2A2A] bg-opacity-90 backdrop-blur-md border border-gray-500 p-10 rounded-lg shadow-2xl">
+        <h2 class="text-3xl font-extrabold text-center text-[#81D4FA] mb-8">新規登録</h2>
         <form action="{{ route('register') }}" method="post" class="max-w-lg mx-auto">
           @csrf
           <div class="mb-6">
-            <label for="name" class="block text-white text-sm font-bold mb-2">名前</label>
-            <input type="text" name="name" id="name" placeholder="あなたの名前" class="w-full px-4 py-3 rounded-lg border border-gray-400 bg-slate-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition duration-300">
+            <label for="name" class="block text-sm font-semibold mb-2 text-[#E0E0E0]">名前</label>
+            <input type="text" name="name" id="name" placeholder="あなたの名前"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-500 bg-[#1E1E1E] text-[#E0E0E0] focus:outline-none focus:ring-2 focus:ring-[#81D4FA] transition duration-300">
           </div>
           <div class="mb-6">
-            <label for="email" class="block text-white text-sm font-bold mb-2">メールアドレス</label>
-            <input type="email" name="email" id="email" placeholder="example@example.com" class="w-full px-4 py-3 rounded-lg border border-gray-400 bg-slate-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition duration-300">
+            <label for="email" class="block text-sm font-semibold mb-2 text-[#E0E0E0]">メールアドレス</label>
+            <input type="email" name="email" id="email" placeholder="example@example.com"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-500 bg-[#1E1E1E] text-[#E0E0E0] focus:outline-none focus:ring-2 focus:ring-[#81D4FA] transition duration-300">
           </div>
           <div class="mb-6">
-            <label for="password" class="block text-white text-sm font-bold mb-2">パスワード</label>
-            <input type="password" name="password" id="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-gray-400 bg-slate-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition duration-300">
+            <label for="password" class="block text-sm font-semibold mb-2 text-[#E0E0E0]">パスワード</label>
+            <input type="password" name="password" id="password" placeholder="••••••••"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-500 bg-[#1E1E1E] text-[#E0E0E0] focus:outline-none focus:ring-2 focus:ring-[#81D4FA] transition duration-300">
           </div>
           <div class="mb-8">
-            <label for="password_confirmation" class="block text-white text-sm font-bold mb-2">パスワード（確認用）</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-gray-400 bg-slate-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition duration-300">
+            <label for="password_confirmation" class="block text-sm font-semibold mb-2 text-[#E0E0E0]">パスワード（確認用）</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-500 bg-[#1E1E1E] text-[#E0E0E0] focus:outline-none focus:ring-2 focus:ring-[#81D4FA] transition duration-300">
           </div>
           <div class="flex justify-center">
-            <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+            <button type="submit" class="bg-[#FFA726] hover:bg-[#FB8C00] text-[#121212] font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FFA726]">
               登録
             </button>
           </div>
@@ -42,7 +46,7 @@
       </div>
     </div>
   </main>
-  <footer class="bg-gray-800">
+  <footer class="bg-[#121212]">
     <x-footer/>
   </footer>
 </body>
