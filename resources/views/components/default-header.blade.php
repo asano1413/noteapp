@@ -34,9 +34,7 @@
         <span class="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full"></span>
       </a>
       <x-SearchModal/>
-      <button class="bg-[#121212] text-[#E0E0E0] border-2 rounded-lg border-[#E0E0E0] px-4 py-2 transition-colors duration-500 hover:bg-[#FFAB91] hover:text-[#121212] hover:cursor-pointer" id="notificationButton">
-        <i class="fas fa-bell"></i>
-      </button>
+      <x-notification-modal/>
     </div>
   </div>
 </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\TermsController;
 use App\Http\Controllers\PersonalNoteController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('index');
@@ -54,6 +55,12 @@ Route::get('/terms', [TermsController::class, 'show'])->name('terms');
 
 Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage')->middleware('auth');
 Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+  Route::get('/notifications', [NotificationController::class, 'index']);
+  Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+  Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+});
 
 Route::resource('posts', PostController::class)->except(['show']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
