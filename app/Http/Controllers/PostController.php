@@ -13,7 +13,7 @@ class PostController extends Controller
     // 投稿一覧の表示
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = Post::latest()->paginate(20);
         return view('posts.index', compact('posts'));
     }
 
@@ -129,4 +129,5 @@ class PostController extends Controller
         $comment->delete();
         return redirect()->route('posts.comments', $post)->with('success', 'コメントが削除されました。');
     }
+
 }

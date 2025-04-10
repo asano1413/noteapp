@@ -1,3 +1,7 @@
+<head>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</head>
 <div class="bg-[#121212]">
   <div class="flex justify-between items-center p-4">
     <div>
@@ -29,9 +33,7 @@
         お問い合わせ
         <span class="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full"></span>
       </a>
-      <button class="bg-[#121212] text-[#E0E0E0] border-2 rounded-lg border-[#E0E0E0] px-4 py-2 transition-colors duration-500 hover:bg-[#FFAB91] hover:text-[#121212] hover:cursor-pointer" id="searchButton">
-        <i class="fas fa-search"></i>
-      </button>
+      <x-SearchModal/>
       <button class="bg-[#121212] text-[#E0E0E0] border-2 rounded-lg border-[#E0E0E0] px-4 py-2 transition-colors duration-500 hover:bg-[#FFAB91] hover:text-[#121212] hover:cursor-pointer" id="notificationButton">
         <i class="fas fa-bell"></i>
       </button>
@@ -39,29 +41,11 @@
   </div>
 </div>
 
-<!-- 検索モーダル -->
-<div id="searchModal" class="fixed inset-0 bg-[#121212] bg-opacity-50 flex items-center justify-center hidden">
-  <div class="bg-[#2A2A2A] text-[#E0E0E0] rounded-lg p-6 w-1/3 shadow-lg">
-    <h2 class="text-lg font-bold mb-4 text-[#81D4FA]">検索</h2>
-    <form>
-      <input type="text" placeholder="検索キーワードを入力" class="w-full px-4 py-2 rounded-lg border border-gray-500 bg-[#1E1E1E] text-[#E0E0E0] focus:outline-none focus:ring-2 focus:ring-[#81D4FA]">
-      <div class="flex justify-end mt-4">
-        <button type="button" id="closeSearchModal" class="bg-[#81D4FA] text-[#121212] px-4 py-2 rounded transition-colors duration-300 hover:bg-[#FFAB91] hover:text-[#121212]">
-          閉じる
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- 通知モーダル -->
-<div id="notificationModal" class="fixed inset-0 bg-[#121212] bg-opacity-50 flex items-center justify-center hidden">
+<div id="notificationModal" class="fixed inset-0 bg-[#121212] bg-opacity-50 flex items-center justify-center hidden z-50">
   <div class="bg-[#2A2A2A] text-[#E0E0E0] rounded-lg p-6 w-1/3 shadow-lg">
     <h2 class="text-lg font-bold mb-4 text-[#81D4FA]">通知</h2>
     <ul class="list-disc pl-5">
-      <li>ダミー通知1</li>
-      <li>ダミー通知2</li>
-      <li>ダミー通知3</li>
+      <li>通知はありません</li>
     </ul>
     <div class="flex justify-end mt-4">
       <button type="button" id="closeNotificationModal" class="bg-[#81D4FA] text-[#121212] px-4 py-2 rounded transition-colors duration-300 hover:bg-[#FFAB91] hover:text-[#121212]">
@@ -72,7 +56,7 @@
 </div>
 
 <!-- ログアウト確認モーダル -->
-<div id="logoutModal" class="fixed inset-0 bg-[#121212] flex items-center justify-center hidden">
+<div id="logoutModal" class="fixed inset-0 bg-[#121212] bg-opacity-50 flex items-center justify-center hidden z-50">
   <div class="bg-[#2A2A2A] text-[#E0E0E0] rounded-lg p-6 w-1/3 shadow-lg">
     <h2 class="text-lg font-bold mb-4 text-[#81D4FA]">ログアウト確認</h2>
     <p class="mb-6">本当にログアウトしますか？</p>
@@ -92,6 +76,8 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const body = document.body;
+
     // 検索モーダル
     const searchButton = document.getElementById('searchButton');
     const searchModal = document.getElementById('searchModal');
@@ -99,10 +85,12 @@
 
     searchButton.addEventListener('click', function () {
       searchModal.classList.remove('hidden');
+      body.style.overflow = 'hidden'; // スクロールを無効化
     });
 
     closeSearchModal.addEventListener('click', function () {
       searchModal.classList.add('hidden');
+      body.style.overflow = ''; // スクロールを有効化
     });
 
     // 通知モーダル
@@ -112,10 +100,12 @@
 
     notificationButton.addEventListener('click', function () {
       notificationModal.classList.remove('hidden');
+      body.style.overflow = 'hidden'; // スクロールを無効化
     });
 
     closeNotificationModal.addEventListener('click', function () {
       notificationModal.classList.add('hidden');
+      body.style.overflow = ''; // スクロールを有効化
     });
 
     // ログアウトモーダル
@@ -125,10 +115,59 @@
 
     logoutButton.addEventListener('click', function () {
       logoutModal.classList.remove('hidden');
+      body.style.overflow = 'hidden'; // スクロールを無効化
     });
 
     cancelLogout.addEventListener('click', function () {
       logoutModal.classList.add('hidden');
+      body.style.overflow = ''; // スクロールを有効化
     });
   });
+
+  function searchModal() {
+  return {
+    isOpen: false,
+    query: '',
+    results: [],
+    open() {
+      this.isOpen = true;
+      this.$nextTick(() => {
+        const input = document.querySelector('input[x-model="query"]');
+        input?.focus();
+      });
+    },
+    close() {
+      this.isOpen = false;
+      this.query = '';
+      this.results = [];
+    },
+    async submitSearch() {
+      if (!this.query) return;
+
+      try {
+        const response = await fetch(`/search?query=${encodeURIComponent(this.query)}`);
+        const data = await response.json();
+
+        this.results = [
+          ...data.users.map(user => ({ id: user.id, type: 'user', name: user.name })),
+          ...data.posts.map(post => ({ id: post.id, type: 'post', title: post.title })),
+        ];
+      } catch (error) {
+        console.error('検索中にエラーが発生しました:', error);
+      }
+    },
+    selectSuggestion(suggestion) {
+      this.query = suggestion;
+      this.submitSearch();
+    },
+    init() {
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          this.open();
+        }
+      });
+    },
+  };
+}
 </script>

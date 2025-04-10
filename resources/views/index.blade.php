@@ -29,7 +29,7 @@
     <x-default-header/>
 </header>
 <main class="py-12 mt-24 flex flex-col items-center">
-    <div class="typing-effect" id="typingEffect">Share_and_keep_your_Note !</div>
+    <div class="typing-effect" id="typingEffect">Share_and_keep_your_Memo !</div>
     <div class="text-[#D3D3D3] text-xl text-center my-20">自分用のメモ、共有用のノートを作成可能！</div>
     <div class="flex space-x-16 mt-8 w-full max-w-4xl">
         <div class="bg-[#2A2A2A] p-12 rounded-lg shadow-lg text-center border-2 border-[#81D4FA] text-[#E0E0E0] flex-grow hover:bg-[#3A3A3A] hover:cursor-pointer transition duration-500 ease-in-out">

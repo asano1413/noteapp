@@ -11,10 +11,13 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\PersonalNoteController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('index');
 })->name('index');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);

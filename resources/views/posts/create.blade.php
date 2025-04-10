@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@auth
 <div class="max-w-4xl mx-auto bg-[#2A2A2A] text-[#E0E0E0] shadow-lg rounded-lg overflow-hidden mt-8 border-2 border-[#81D4FA]">
     <div class="bg-gradient-to-r from-[#81D4FA] to-[#4FC3F7] p-6">
         <h1 class="text-3xl font-bold text-[#121212]">新規投稿</h1>
@@ -29,4 +30,14 @@
         </form>
     </div>
 </div>
+@else
+<div class="max-w-4xl mx-auto bg-[#2A2A2A] text-[#E0E0E0] shadow-lg rounded-lg overflow-hidden mt-8 border-2 border-[#81D4FA]">
+    <div class="bg-gradient-to-r from-[#81D4FA] to-[#4FC3F7] p-6">
+        <h1 class="text-3xl font-bold text-[#121212]">新規投稿</h1>
+    </div>
+    <div class="p-6">
+        <p class="text-red-500">ログインしてください。</p>
+    </div>
+</div>
+@endauth
 @endsection
