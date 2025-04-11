@@ -19,14 +19,14 @@ class LoginController extends Controller
       ]);
 
       if (Auth::attempt($request->only('email', 'password'))) {
-        return redirect()->intended('/')->with('success','ログインに成功しました');
+        return redirect()->intended('/mypage')->with('success','ログインに成功しました');
       }
         return redirect()->back()->with('error','ログインに失敗しました');
     }
 
     public function authenticate(Request $request)
     {
-        return redirect()->route('/');
+        return redirect()->route('/mypage');
     }
 
     public function logout()

@@ -7,7 +7,7 @@
     </ul>
   </div>
   <div class="flex justify-center space-x-5 my-4">
-    <a href="https://github.com" target="_blank" class="text-[#E0E0E0] hover:text-[#FFAB91]">
+    <a href="https://github.com/asano1413/NoteApp" target="_blank" class="text-[#E0E0E0] hover:text-[#FFAB91]">
       <i class="fab fa-github text-2xl"></i>
     </a>
     <a href="https://facebook.com" target="_blank" class="text-[#E0E0E0] hover:text-[#FFAB91]">

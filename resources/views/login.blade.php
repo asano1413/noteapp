@@ -14,10 +14,9 @@
 
   <main class="w-4/5 mx-auto mt-16 mb-24 bg-[#2A2A2A] bg-opacity-90 backdrop-blur-md rounded-lg shadow-2xl">
     <div class="flex flex-col lg:flex-row">
-      <!-- ログインフォーム -->
       <div class="w-full lg:w-1/2 bg-[#1E1E1E] p-10 rounded-tl-lg lg:rounded-l-lg shadow-xl">
         <h2 class="text-3xl font-extrabold text-center text-[#81D4FA] mb-8">ログイン</h2>
-        <form action="{{ route('login') }}" method="post" class="max-w-lg mx-auto">
+        <form action="{{ route('login') }}" method="POST" class="max-w-lg mx-auto">
           @csrf
           <div class="mb-6">
             <label for="email" class="block text-sm font-semibold mb-2 text-[#E0E0E0]">メールアドレス</label>
@@ -40,7 +39,6 @@
         </form>
       </div>
 
-      <!-- 新規登録案内 -->
       <div class="w-full lg:w-1/2 bg-[#1E1E1E] p-10 rounded-br-lg lg:rounded-bl-none lg:rounded-r-lg shadow-xl flex flex-col items-center justify-center">
         <h2 class="text-3xl font-extrabold text-center text-[#81D4FA] mb-6">初めての方へ</h2>
         <p class="text-center mb-8 text-lg text-[#D3D3D3]">ご登録いただくと、全ての機能がご利用いただけます。今すぐ始めましょう！</p>
