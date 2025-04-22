@@ -19,7 +19,10 @@ class NotificationController extends Controller
 
     public function markAsRead($id)
     {
-        $notification = Notification::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $notification = Notification::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
         $notification->update(['read' => true]);
 
         return response()->json(['success' => true]);
@@ -27,7 +30,10 @@ class NotificationController extends Controller
 
     public function markAllAsRead()
     {
-        Notification::where('user_id', Auth::id())->where('read', false)->update(['read' => true]);
+        Notification::where('user_id', Auth::id())
+            ->where('read', false)
+            ->update(['read' => true]);
+
         return response()->json(['success' => true]);
     }
 }

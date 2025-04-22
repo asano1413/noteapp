@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class ContactController extends Controller
         return view('contact');
     }
 
-    public function send(Request $request)
+    public function sendContact(Request $request)
     {
         $rateLimitKey = 'contact-form:' . $request->ip();
 
@@ -29,10 +28,10 @@ class ContactController extends Controller
         ]);
 
         try {
-          Mail::to(config('mail.admin_address'))->send(new ContactMail($validated));
-      } catch (\Exception $e) {
-          return back()->withErrors(['error' => '送信中にエラーが発生しました。もう一度お試しください。']);
-      }
+            Mail::to('mit2471509@stu.0-hara.ac.jp')->send(new ContactMail($validated));
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => '送信中にエラーが発生しました。もう一度お試しください。']);
+        }
 
         RateLimiter::hit($rateLimitKey, 600);
 

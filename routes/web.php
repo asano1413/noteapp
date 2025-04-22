@@ -20,8 +20,9 @@ Route::get('/', function () {
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/logout', function () {
     Auth::logout();
@@ -56,10 +57,10 @@ Route::get('/terms', [TermsController::class, 'show'])->name('terms');
 Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage')->middleware('auth');
 Route::get('/mypage/edit', [MyPageController::class, 'edit'])->name('mypage.edit')->middleware('auth');
 
-Route::middleware('auth')->group(function () {
-  Route::get('/notifications', [NotificationController::class, 'index']);
-  Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
-  Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+Route::middleware(['auth'])->group(function () {
+  Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+  Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+  Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 });
 
 Route::resource('posts', PostController::class)->except(['show']);
