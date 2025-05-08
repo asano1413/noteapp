@@ -1,5 +1,5 @@
 <div x-data="searchModal()" x-init="init()" @keydown.window.escape="close()" class="relative">
-  <!-- 検索ボタン -->
+
   <button
     @click="open()"
     class="flex items-center gap-2 px-3 py-2 text-sm rounded-full bg-[#2A2A2A] text-[#E0E0E0] hover:bg-[#3A3A3A] transition-all duration-300"
@@ -15,7 +15,6 @@
     </kbd>
   </button>
 
-  <!-- モーダル -->
   <div
     x-show="isOpen"
     x-transition.opacity

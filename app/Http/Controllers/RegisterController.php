@@ -24,7 +24,7 @@ class RegisterController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // パスワードをハッシュ化
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->route('login')->with('success', '登録が完了しました。ログインしてください。');

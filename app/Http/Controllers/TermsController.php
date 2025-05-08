@@ -9,7 +9,6 @@ class TermsController extends Controller
 {
     public function show()
     {
-        // 利用規約を表示
         return view('terms');
     }
 }

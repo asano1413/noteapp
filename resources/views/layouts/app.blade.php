@@ -16,6 +16,17 @@
     </header>
     <main class="flex-grow container mx-auto py-8 px-4 bg-[#1E1E1E] text-[#E0E0E0] rounded-lg shadow-lg mt-6">
         @yield('content')
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded my-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded my-4">
+                {{ session('error') }}
+            </div>
+        @endif
     </main>
     <footer class="bg-[#121212] mt-6">
         <x-footer />

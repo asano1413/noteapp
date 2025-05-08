@@ -11,7 +11,6 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
 
-        // ユーザー名とメモの題名を検索
         $users = User::where('name', 'LIKE', "%{$query}%")->get();
         $posts = Post::where('title', 'LIKE', "%{$query}%")->get();
 
