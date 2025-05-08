@@ -13,6 +13,7 @@ use App\Http\Controllers\PersonalNoteController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     return view('index');
@@ -65,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('posts', PostController::class)->except(['show']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('posts.comments');
+
 // Postの追加アクション
 Route::prefix('posts/{post}')->group(function () {
     Route::get('delete', [PostController::class, 'delete'])->name('posts.delete');
